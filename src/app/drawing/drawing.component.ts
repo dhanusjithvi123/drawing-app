@@ -47,12 +47,17 @@ export class DrawingComponent implements OnInit {
     this.ctx?.stroke();
     this.lastX = currentX;
     this.lastY = currentY;
+
+    // Call sendDrawingData while drawing is in progress
+    this.sendDrawingData();
   }
 
   @HostListener('mouseup')
   onMouseUp() {
     this.drawing = false;
     this.ctx?.closePath();
+    
+    // Call sendDrawingData when drawing is finished
     this.sendDrawingData();
   }
 

@@ -1,4 +1,3 @@
-<!-- viewer.component.html -->
-<div>
-  <canvas #viewerCanvas width="800" height="600"></canvas>
-</div>
+<app-viewer *ngIf="viewerCanvas" [viewerCanvas]="viewerCanvas"></app-viewer>
+<canvas #viewerCanvas width="800" height="600"></canvas>
+

@@ -18,12 +18,16 @@ export class SocketService {
   private setupSocketListeners() {
     this.socket.on('drawing', (data: any) => {
       console.log('Received drawing data:', data);
-      this.drawingDataSubject.next(data); // Store data and emit it to subscribers
+      this.drawingDataSubject.next(data);
     });
   }
 
   sendDrawingData(data: any) {
     console.log('Sending drawing data:', data);
     this.socket.emit('drawing', data);
+  }
+
+  updateDrawingData(data: any) {
+    this.drawingDataSubject.next(data);
   }
 }
