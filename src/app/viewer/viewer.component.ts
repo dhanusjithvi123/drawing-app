@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SocketService } from '../socket.service';
 
 @Component({
   selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.css']
+  template: `<div>{{ drawingData | json }}</div>`,
 })
-export class ViewerComponent {
+export class ViewerComponent implements OnInit {
+  drawingData: any;
 
+  constructor(private socketService: SocketService) {}
+
+  ngOnInit() {
+    this.socketService.drawingData$.subscribe((data) => {
+      this.drawingData = data;
+    });
+  }
 }

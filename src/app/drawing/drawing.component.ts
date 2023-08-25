@@ -53,16 +53,17 @@ export class DrawingComponent implements OnInit {
   onMouseUp() {
     this.drawing = false;
     this.ctx?.closePath();
+    this.sendDrawingData();
   }
 
   sendDrawingData() {
     // Check if drawing is in progress
     if (this.drawing) {
-      // Send the current drawing data to the server
+      // Send the current drawing data to the server using SocketService
       const drawingData = { type: 'draw', x: this.lastX, y: this.lastY };
       this.socketService.sendDrawingData(drawingData);
     } else {
-      // Inform the server that the drawing has ended
+      // Inform the server that the drawing has ended using SocketService
       this.socketService.sendDrawingData({ type: 'end' });
     }
   }

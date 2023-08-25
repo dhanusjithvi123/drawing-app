@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client';
-import { Observable } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  private socket: any;
+  private socket: Socket;
+  private drawingDataSubject = new BehaviorSubject<any>(null);
+  drawingData$: Observable<any> = this.drawingDataSubject.asObservable();
 
   constructor() {
-    this.socket = io('http://localhost:3000', { transports : ['websocket'] }); // Replace with your server URL
-      
+    this.socket = io('http://localhost:3000', { transports: ['websocket'] });
+    this.setupSocketListeners();
   }
 
-  // Send drawing data to the server
-  sendDrawingData(data: any) {
-    this.socket.emit('drawing', data);
-  }
-
-  // Receive drawing data from the server
-  onDrawingData(): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on('drawing', (data: any) => {
-        observer.next(data);
-      });
+  private setupSocketListeners() {
+    this.socket.on('drawing', (data: any) => {
+      console.log('Received drawing data:', data);
+      this.drawingDataSubject.next(data); // Store data and emit it to subscribers
     });
+  }
+
+  sendDrawingData(data: any) {
+    console.log('Sending drawing data:', data);
+    this.socket.emit('drawing', data);
   }
 }
