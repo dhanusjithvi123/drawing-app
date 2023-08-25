@@ -1,4 +1,8 @@
-<div>
-    <canvas #canvas width="800" height="600"></canvas>
-    <button (click)="sendDrawingData()">Send Drawing</button>
+<!-- viewer.component.html -->
+
+<div class="canvas-container">
+    <h2>Draw Here</h2>
+    <canvas #canvas width="800" height="600" style="border: 1px solid #0c0c0c; background-color: aquamarine;"></canvas>
+    <button (click)="clearCanvas()" style="margin-top: 10px; background-color: red; color: white;">Clear</button>
   </div>
+  

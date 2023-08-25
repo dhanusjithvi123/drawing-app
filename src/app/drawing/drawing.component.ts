@@ -72,4 +72,15 @@ export class DrawingComponent implements OnInit {
       this.socketService.sendDrawingData({ type: 'end' });
     }
   }
+
+
+  clearCanvas() {
+    // Clear the canvas by filling it with the background color
+    if (this.ctx) {
+      this.ctx.fillStyle = 'aquamarine';
+      this.ctx.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+    }
+    this.socketService.sendDrawingData({ type: 'clear' });
+  }
+
 }

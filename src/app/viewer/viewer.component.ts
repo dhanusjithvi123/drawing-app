@@ -3,7 +3,8 @@ import { SocketService } from '../socket.service';
 
 @Component({
   selector: 'app-viewer',
-  template: '<canvas #viewerCanvas width="800" height="600"></canvas>',
+  templateUrl: './viewer.component.html',
+  styleUrls: ['./viewer.component.css']
 })
 export class ViewerComponent implements AfterViewInit {
   @ViewChild('viewerCanvas') viewerCanvas!: ElementRef<HTMLCanvasElement>;
@@ -28,6 +29,9 @@ export class ViewerComponent implements AfterViewInit {
         this.drawPoint(data.x, data.y);
       } else if (data && data.type === 'end') {
         // Handle the end of drawing (clear the canvas or perform other actions)
+      } else if (data && data.type === 'clear') {
+        // Clear the canvas
+        this.clearCanvas();
       }
     });
   }
@@ -37,5 +41,11 @@ export class ViewerComponent implements AfterViewInit {
 
     this.ctx.lineTo(x, y);
     this.ctx.stroke();
+  }
+
+  private clearCanvas() {
+    // Clear the canvas by filling it with the background color
+    this.ctx.fillStyle = 'aquamarine';
+    this.ctx.fillRect(0, 0, this.viewerCanvas.nativeElement.width, this.viewerCanvas.nativeElement.height);
   }
 }
